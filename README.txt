@@ -7,3 +7,6 @@ Pretrained weights are stored in "GeometryLBG.mat" file.
 
 Invoking the function without any arguments enables random initialization of the weights:
 >> Synthetic_Data_3D_Train_GBPRBM
+
+To obtain "GeometryLBG.mat" file, run 
+>> GBPRBM_LBG_Pretraining
