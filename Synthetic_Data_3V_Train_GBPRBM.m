@@ -1,4 +1,4 @@
-function opt = Synthetic_Data_3D_Train_GBPRBM(varargin)
+function opt = Synthetic_Data_3V_Train_GBPRBM(varargin)
 % If "Enable_Visual_Debugging" is set to "true", then this function will
 % create a directory called "ContrastiveDivergence" and store figures with
 % model geometry evaluated after every iteration as PNG images. 
@@ -206,7 +206,7 @@ for x = 1:N_Epochs
     data.features = features(idx,:);   
 
     % Train the GRBM model using Contrastive Divergence
-    [opt] = GBPRBM_Train(data, opt);   
+    [opt] = GBPRBM_Train_3V(data, opt);   
     for j=1:H
         Centroid_Evolution{j}(:,:,(x-1)*M+2:x*M+1) = opt.Centroid_Evolution{j};
     end

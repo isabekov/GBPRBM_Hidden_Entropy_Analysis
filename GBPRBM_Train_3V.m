@@ -1,4 +1,4 @@
-function [opt]  = GBPRBM_Train(data, opt)
+function [opt]  = GBPRBM_Train_3V(data, opt)
 % Inputs:
 % Name            Size             Explanation
 % data.features:  (N_Samples x V)  "N_Samples" instances of feature vector of size (1 x V)
