@@ -18,5 +18,4 @@ b_v = opt.b_v;
 V = opt.V;
 
 v_mean = (b_v + W*h);
-v_samp = v_mean + sqrt(exp(z_v)).*randn(V,1);
-                  
+v_samp = v_mean + sqrt(exp(z_v)).*randn(V,1);                
