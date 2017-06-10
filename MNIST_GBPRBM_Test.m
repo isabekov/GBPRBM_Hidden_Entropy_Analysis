@@ -98,7 +98,7 @@ ylabel('Bits');
 title(sprintf('Sum of Empirical Entropies of Hidden Units = %0.2f, Max = %d,\nNormalized Empirical Entropy of Hidden Units = %0.2f', ...
                sum(Entropy), opt.H, NEEoHU));    
 drawnow;
-FileName = fullfile(opt.DirSave, sprintf( 'RMSE_NEEoHU,H=%02d', opt.H));
+FileName = fullfile(opt.DirSave, sprintf( 'NEEoHU,H=%02d', opt.H));
 saveas(h_fig, [FileName '.png'], 'png');
 hgsave(h_fig, [FileName '.fig']);
 
@@ -106,12 +106,12 @@ hgsave(h_fig, [FileName '.fig']);
 MNIST_Plot_Pairs_of_Images(testData(1:N_Img_Test,:)', v_mean(:,1:N_Img_Test),...
       sprintf('MNIST: GBPRBM, H=%d, RMSE (Test)=%f, Orig. & Recon. Images', opt.H, RMSE_Test));
 FileName = fullfile(opt.DirSave, sprintf( 'Orig_Recon_Images,H=%02d', opt.H));
-saveas(h_fig, [FileName '.png'], 'png');
-hgsave(h_fig, [FileName '.fig']);
+saveas(gcf,[FileName '.png'], 'png');
+hgsave(gcf,[FileName '.fig']);
 
 N_Plots = min(opt.H,100);    
 MNIST_Visualize_Weights(opt.W(:,1:N_Plots), sprintf('MNIST: GBPRBM (H=%d) Model Weights', opt.H));
 
 FileName = fullfile(opt.DirSave, sprintf('Weights,H=%d', opt.H));
-saveas(h_fig, [FileName '.png'], 'png');
-hgsave(h_fig, [FileName '.fig']);
+saveas(gcf,[FileName '.png'], 'png');
+hgsave(gcf,[FileName '.fig']);
