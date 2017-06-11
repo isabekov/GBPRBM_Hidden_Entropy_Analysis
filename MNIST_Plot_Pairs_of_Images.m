@@ -1,4 +1,4 @@
-function MNIST_Plot_Pairs_of_Images(Img_Orig,Img_Recon, varargin)
+function h_fig = MNIST_Plot_Pairs_of_Images(Img_Orig,Img_Recon, varargin)
 % This function plots pairs of MNIST images from two matrices in a grid
 % by reshaping 784x1 column vectors from supplied matrices into pairs of 
 % two 28x28 images concatenated side by side.
@@ -56,7 +56,7 @@ for i=1:N_Horiz
         end
     end    
 end
-figure('Name', str, 'NumberTitle', 'Off');
+h_fig = figure('Name', str, 'NumberTitle', 'Off');
 imagesc(A);
 set(gca, 'DataAspectRatio', [1 1 1]);
 axis off;

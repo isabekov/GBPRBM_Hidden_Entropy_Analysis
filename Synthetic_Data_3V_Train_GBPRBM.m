@@ -220,41 +220,11 @@ opt.final.b_h = opt.init.b_h;
 N_Samples_Test = size(features_test,1);
 H_Test = zeros(H, N_Samples_Test);
 for i=1:N_Samples_Test
-    [H_Test(:,i), P_h_m1_v, P_h_p1_v] = GBPRBM_Gibbs_Sampling_of_Hidden_Units(opt, features_test(i,:)');
+    [H_Test(:,i), ~, ~] = GBPRBM_Gibbs_Sampling_of_Hidden_Units(opt, features_test(i,:)');
 end
 
-figure('Name','Hidden Units', 'NumberTitle', 'Off');
-subplot(131);
-imagesc(H_Test);
-xlabel('Test sample');
-ylabel('Hidden vector');
-
-subplot(132);
-[h_count, pos] = hist(H_Test',2);
-p_h_m = h_count(2,:)/N_Samples_Test;
-p_h_p = h_count(1,:)/N_Samples_Test;
-bar(p_h_m);
-set(gca, 'XLim', [0.5, opt.H+0.5]);
-set(gca, 'YLim',[0 1]);
-set(gca, 'view', [90 90]);
-ylabel('Probability');
-Entropy = zeros(H,1);
-for j=1:H
-    if p_h_m(j)==1
-       p_h_m(j)=1-eps; 
-    end
-    if p_h_p(j)==0
-       p_h_p(j)=1+eps; 
-    end
-    Entropy(j) = -(  p_h_p(j).*log2(p_h_p(j)) + p_h_m(j).*log2(p_h_m(j))  );
-end
-
-subplot(133);
-bar(Entropy);
-set(gca, 'view', [90 90]);
-set(gca, 'XLim', [0.5, opt.H+0.5]);
-set(gca, 'YLim',[0 1]);
-title(sprintf('Sum of Entropy of indiv. units=%f, Max is = %d,\nNormalized Entropy=%0.3f', sum(Entropy), opt.H, sum(Entropy)/opt.H));
+% Plot Normalized Empirical Entropy of Individual Hidden Units
+GBPRBM_NEEoIHU(H_Test);
 
 %% Post-training procedures
 figure('Name', 'Contrastive Divergence Results', 'NumberTitle', 'Off', ...

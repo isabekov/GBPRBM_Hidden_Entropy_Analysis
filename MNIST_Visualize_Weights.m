@@ -1,4 +1,4 @@
-function MNIST_Visualize_Weights(W, varargin)
+function h_fig = MNIST_Visualize_Weights(W, varargin)
 % This function plots a sequence of MNIST images from matrix W in a grid 
 % by reshaping 784x1 column vectors into 28x28 images concatenated side by side.
 %                 Inputs      
@@ -50,7 +50,7 @@ for i=1:N_Horiz
         end
     end    
 end
-figure('Name', str, 'NumberTitle', 'Off');
+h_fig = figure('Name', str, 'NumberTitle', 'Off');
 imagesc(A);
 set(gca, 'DataAspectRatio', [1 1 1]);
 axis off;

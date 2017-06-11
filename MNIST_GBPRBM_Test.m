@@ -50,68 +50,22 @@ for i=1:N_Samples_Test
 end
 RMSE_Test = RMSE/N_Samples_Test;
 
-%% Plotting Normalized empirical entropy of hidden units, RMSE
-h_fig = figure('Name', sprintf('MNIST: GBPRBM, H=%d: RMSE (test), Normalized Empirical Entropy of Hidden Units', opt.H), ...
-               'NumberTitle', 'Off', 'Units', 'normalized', 'Position', [ 0.1432    0.4648    0.6792    0.4324]); 
-subplot(131);
-imagesc(H_Test);
-xlabel('Test samples');
-ylabel('Hidden unit index');
-title(sprintf('Activations, RMSE (test) = %0.3f', RMSE_Test));
-
-subplot(132);
-[h_count, ~] = hist(H_Test',2);
-p_h_m = h_count(2,:)/N_Samples_Test;
-p_h_p = h_count(1,:)/N_Samples_Test;
-bar(p_h_m);
-set(gca, 'XLim', [0.5, opt.H+0.5]);
-set(gca, 'YLim',[0 1]);
-set(gca, 'View', [90 90]);
-xlabel('Hidden unit index');
-ylabel('p(h_j)');
-title('Normalized histogram (Probability)');
-Entropy = zeros(opt.H,1);
-for j=1:opt.H
-    if p_h_m(j)==1
-       p_h_m(j)=1-eps; 
-    elseif p_h_m(j)==0
-       p_h_m(j)=1+eps; 
-    end
-
-    if p_h_p(j)==0
-       p_h_p(j)=1+eps; 
-    elseif p_h_p(j)==1
-       p_h_p(j)=1-eps; 
-    end
-    Entropy(j) = -(p_h_p(j).*log2(p_h_p(j)) + p_h_m(j).*log2(p_h_m(j)));
-end
-% Normalizing empirical entropy of hidden units
-NEEoHU = sum(Entropy)/opt.H;
-
-subplot(133);
-bar(Entropy);
-set(gca, 'View', [90 90]);
-set(gca, 'XLim', [0.5, opt.H+0.5]);
-set(gca, 'YLim',[0 1]);
-xlabel('Hidden unit index');
-ylabel('Bits');
-title(sprintf('Sum of Empirical Entropies of Hidden Units = %0.2f, Max = %d,\nNormalized Empirical Entropy of Hidden Units = %0.2f', ...
-               sum(Entropy), opt.H, NEEoHU));    
-drawnow;
+% Plot Normalized Empirical Entropy of Individual Hidden Units, RMSE
+[h_fig, NEEoHU] = GBPRBM_NEEoIHU(H_Test, sprintf('MNIST: GBPRBM, H=%d: Normalized Empirical Entropy of Hidden Units', opt.H), RMSE_Test);
 FileName = fullfile(opt.DirSave, sprintf( 'NEEoHU,H=%02d', opt.H));
 saveas(h_fig, [FileName '.png'], 'png');
 hgsave(h_fig, [FileName '.fig']);
 
 % Plot original and reconstructed images
-MNIST_Plot_Pairs_of_Images(testData(1:N_Img_Test,:)', v_mean(:,1:N_Img_Test),...
+h_fig = MNIST_Plot_Pairs_of_Images(testData(1:N_Img_Test,:)', v_mean(:,1:N_Img_Test),...
       sprintf('MNIST: GBPRBM, H=%d, RMSE (Test)=%f, Orig. & Recon. Images', opt.H, RMSE_Test));
 FileName = fullfile(opt.DirSave, sprintf( 'Orig_Recon_Images,H=%02d', opt.H));
-saveas(gcf,[FileName '.png'], 'png');
-hgsave(gcf,[FileName '.fig']);
+saveas(h_fig,[FileName '.png'], 'png');
+hgsave(h_fig,[FileName '.fig']);
 
+% Plot weights of the GBPRBM model
 N_Plots = min(opt.H,100);    
-MNIST_Visualize_Weights(opt.W(:,1:N_Plots), sprintf('MNIST: GBPRBM (H=%d) Model Weights', opt.H));
-
+h_fig = MNIST_Visualize_Weights(opt.W(:,1:N_Plots), sprintf('MNIST: GBPRBM (H=%d) Model Weights', opt.H));
 FileName = fullfile(opt.DirSave, sprintf('Weights,H=%d', opt.H));
-saveas(gcf,[FileName '.png'], 'png');
-hgsave(gcf,[FileName '.fig']);
+saveas(h_fig,[FileName '.png'], 'png');
+hgsave(h_fig,[FileName '.fig']);
