@@ -15,7 +15,7 @@ function [opt, RMSE_Evolution] = MNIST_GBPRBM_Train(varargin)
 
 if isempty(varargin)
     % Number of hidden units (default)
-    opt.H = 49;
+    opt.H = 1024;
 elseif length(varargin)>=1
     opt.H = varargin{1};
 end
@@ -27,7 +27,7 @@ else
 end
 % Set random number generator's seed value
 rng(1);
-%trainData = trainData(1:5000,:);
+% trainData = trainData(1:5000,:);
 [N_Samples_Train, V] = size(trainData); 
 
 % Visible variances
@@ -74,7 +74,7 @@ opt.mBatch_Size = mBatch_Size;
 opt.N_Samples_Train = N_Samples_Train;
 opt.N_Epochs = N_Epochs;
 
-% Initialize intra-layer weights
+% Initialize weights
 opt.W = 0.01*randn(opt.V,opt.H);
 % Initialize visible bias
 opt.b_v = (mean(trainData,1))';
@@ -94,7 +94,7 @@ opt.DirSave = 'MNIST_GBPRBM_Model';
 if exist(opt.DirSave,'dir') ~=7   
    mkdir(opt.DirSave); 
 end
-% A *.mat file to save the RBM model
+% A *.mat file to save the GBPRBM model
 FileName = fullfile(opt.DirSave, sprintf('MNIST_GBPRBM_Model,H=%i.mat', opt.H));
 save(FileName, '-struct', 'opt');
 save(FileName, 'RMSE_Evolution', '-append');

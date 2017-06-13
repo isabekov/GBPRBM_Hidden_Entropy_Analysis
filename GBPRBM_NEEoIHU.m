@@ -1,4 +1,4 @@
-function [h_fig, NEEoHU] = GBPRBM_NEEoIHU(H_Test, varargin)
+function [h_fig, NEEoIHU] = GBPRBM_NEEoIHU(H_Test, varargin)
 % This function computes Normalized Empirical Entropy of Individual Hidden
 % Units based on activations (i.e. realizations [-1,+1]) of the test hidden 
 % vectors by taking a histogram of individual hidden units and calculating
@@ -9,7 +9,7 @@ function [h_fig, NEEoHU] = GBPRBM_NEEoIHU(H_Test, varargin)
 if length(varargin) >= 1
    str = varargin{1};
 else
-   str = sprintf('GBPRBM, H=%d: Normalized Empirical Entropy of Hidden Units', H);
+   str = sprintf('GBPRBM, H=%d: Normalized Empirical Entropy of Individual Hidden Units', H);
 end
 
 p_h_m = h_count(2,:)/N_Samples_Test;
@@ -29,8 +29,8 @@ for j=1:H
     end
     Entropy(j) = -(p_h_p(j).*log2(p_h_p(j)) + p_h_m(j).*log2(p_h_m(j)));
 end
-% Normalizing empirical entropy of hidden units
-NEEoHU = sum(Entropy)/H;
+% Normalized Empirical Entropy of Individual Hidden Units
+NEEoIHU = sum(Entropy)/H;
 
 h_fig = figure('Name', str, 'NumberTitle', 'Off', ...
        'Units', 'normalized', 'Position', [ 0.1432    0.4648    0.6792    0.4324]); 
@@ -62,6 +62,6 @@ set(gca, 'XLim', [0.5, H+0.5]);
 set(gca, 'YLim',[0 1]);
 xlabel('Hidden unit index');
 ylabel('Bits');
-title(sprintf('Sum of Empirical Entropies of Hidden Units = %0.2f, Max = %d,\nNormalized Empirical Entropy of Hidden Units = %0.2f', ...
-               sum(Entropy), H, NEEoHU));    
+title(sprintf('Sum of EEoIHUs = %0.2f, Max = %d,\nNEEoIHU = %0.2f', ...
+               sum(Entropy), H, NEEoIHU));    
 drawnow;

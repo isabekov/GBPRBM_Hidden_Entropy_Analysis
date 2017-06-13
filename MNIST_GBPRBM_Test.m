@@ -2,7 +2,7 @@ function [RMSE_Test, NEEoHU] = MNIST_GBPRBM_Test(varargin)
 % This function tests a Gaussian-Bipolar RBM model, which is passed in a
 % form of a structure as the second argument or loaded from a *.mat file
 % based on the number of hidden units specified as a the first argument. 
-% Test data is loaded from the file or supplied as the third rgument.
+% Test data is loaded from the file or supplied as the third argument.
 %                    Optional Inputs
 % =================================================================
 %         H:     positive integer            number of hidden units
@@ -12,12 +12,12 @@ function [RMSE_Test, NEEoHU] = MNIST_GBPRBM_Test(varargin)
 %                        Outputs
 % =================================================================
 %  RMSE_Test :  RMSE value of the test data
-%     NEEoHU :  Normalized Empirical Entropy of Hidde Units
+%    NEEoIHU :  Normalized Empirical Entropy of Individual Hidden Units
 
 % A model to load
 if isempty(varargin)
     % Number of hidden units (default)
-    H = 49;
+    H = 1024;
 elseif length(varargin)>=1
     H = varargin{1};
 end
@@ -36,7 +36,7 @@ end
 
 %testData = testData(1:1000,:);
 N_Samples_Test = size(testData,1); 
-% Number of images to reconstruct
+% Number of images to display
 N_Img_Test = 100;
 %% Testing
 H_Test = zeros(opt.H, N_Samples_Test);
@@ -51,7 +51,7 @@ end
 RMSE_Test = RMSE/N_Samples_Test;
 
 % Plot Normalized Empirical Entropy of Individual Hidden Units, RMSE
-[h_fig, NEEoHU] = GBPRBM_NEEoIHU(H_Test, sprintf('MNIST: GBPRBM, H=%d: Normalized Empirical Entropy of Hidden Units', opt.H), RMSE_Test);
+[h_fig, NEEoHU] = GBPRBM_NEEoIHU(H_Test, sprintf('MNIST: GBPRBM, H=%d: Normalized Empirical Entropy of Individual Hidden Units', opt.H), RMSE_Test);
 FileName = fullfile(opt.DirSave, sprintf( 'NEEoHU,H=%02d', opt.H));
 saveas(h_fig, [FileName '.png'], 'png');
 hgsave(h_fig, [FileName '.fig']);
