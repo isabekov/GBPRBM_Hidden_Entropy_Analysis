@@ -41,7 +41,7 @@ D_b_h = zeros(H,1);
 
 RMSE_Evolution = zeros(1,M);
 disp('===========================================');
-fprintf('             GBPRBM, H = %d           \n', H);
+fprintf('             GBPRBM, V = %d, H = %d           \n', V, H);
 % For every mini-batch "m" do:
 for m=1:M
     opt.m = m;
