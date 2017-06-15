@@ -36,7 +36,7 @@ V_Pad = 2; % pixels
 H_Pad = 2; % pixels
 % Number of pixels in width (height as well, this is a square image)
 N = 28; % pixels
-% Allocate memory for the compined image
+% Allocate memory for the combined image
 A = ones(N*N_Horiz + H_Pad*(N_Horiz-1), 2*N*N_Vert + V_Pad*(N_Vert-1));
 % Counter for the image sample to be plotted
 cnt = 1;
