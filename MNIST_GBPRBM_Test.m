@@ -36,8 +36,6 @@ end
 
 %testData = testData(1:1000,:);
 N_Samples_Test = size(testData,1); 
-% Number of images to display
-N_Img_Test = 100;
 %% Testing
 H_Test = zeros(opt.H, N_Samples_Test);
 % Preallocate memory for the reconstructed images
@@ -56,8 +54,27 @@ FileName = fullfile(opt.DirSave, sprintf( 'NEEoHU,H=%02d', opt.H));
 saveas(h_fig, [FileName '.png'], 'png');
 hgsave(h_fig, [FileName '.fig']);
 
+% Number of images per digit to display
+N_IPD = 10;
+% Number of unique digits
+N_UD = 10;
+idx = zeros(N_UD, N_IPD);
+for j=1:N_UD
+    cnt = 1;
+    for k=1:N_Samples_Test
+       Digit = find(testLabels(k,:)); %#ok<NODEF>
+       if Digit == j
+          idx(j,cnt) = k;
+          cnt = cnt + 1;
+       end
+       if cnt == N_IPD+1
+          break
+       end
+    end
+end
+idx = reshape(idx, N_IPD*N_UD,1);
 % Plot original and reconstructed images
-h_fig = MNIST_Plot_Pairs_of_Images(testData(1:N_Img_Test,:)', v_mean(:,1:N_Img_Test),...
+h_fig = MNIST_Plot_Pairs_of_Images(testData(idx,:)', v_mean(:,idx),...
       sprintf('MNIST: GBPRBM, H=%d, RMSE (Test)=%f, Orig. & Recon. Images', opt.H, RMSE_Test));
 FileName = fullfile(opt.DirSave, sprintf( 'Orig_Recon_Images,H=%02d', opt.H));
 saveas(h_fig,[FileName '.png'], 'png');
