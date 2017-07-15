@@ -25,9 +25,8 @@ Model_Dir = 'MNIST_GBPRBM_Model';
 for n=1:H_vec_len
     FileName = fullfile(Model_Dir, sprintf('MNIST_GBPRBM_Model,H=%i.mat', H_vec(n)));
     opt = load(FileName);        
-    testData = testData(1:100,:);
     % Testing
-    [RMSE_Test(n), NEEoIHU_Test(n)] = MNIST_GBPRBM_Test(H_vec(n), opt, testData);
+    [RMSE_Test(n), NEEoIHU_Test(n)] = MNIST_GBPRBM_Test(H_vec(n), opt, testData, testLabels);
     % Close popped up figures
     close(gcf);
     close(gcf);

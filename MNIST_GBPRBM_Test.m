@@ -7,7 +7,8 @@ function [RMSE_Test, NEEoHU] = MNIST_GBPRBM_Test(varargin)
 % =================================================================
 %         H:     positive integer            number of hidden units
 %       opt:     structure                   model parameters
-%  testData:     N_Samples x V               test data
+%  testData:     N_Samples x V               test data (V = 784)
+%  testLabels    N_Samples x N_Classes       test labels (N_Classes = 10)
 %
 %                        Outputs
 % =================================================================
@@ -27,8 +28,9 @@ else
     FileName = fullfile('MNIST_GBPRBM_Model', sprintf('MNIST_GBPRBM_Model,H=%i.mat', H));
     opt = load(FileName);
 end
-if length(varargin)==3
+if length(varargin)==4
     testData = varargin{3};
+    testLabels = varargin{4};
 else
     % Load MNIST test data
     load(fullfile('MNIST', 'MNIST_Test_Medal_Normalized.mat'));
@@ -62,7 +64,7 @@ idx = zeros(N_UD, N_IPD);
 for j=1:N_UD
     cnt = 1;
     for k=1:N_Samples_Test
-       Digit = find(testLabels(k,:)); %#ok<NODEF>
+       Digit = find(testLabels(k,:));
        if Digit == j
           idx(j,cnt) = k;
           cnt = cnt + 1;
