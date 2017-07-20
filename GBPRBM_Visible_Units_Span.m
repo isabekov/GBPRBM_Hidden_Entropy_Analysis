@@ -1,7 +1,7 @@
 function [opt] = GBPRBM_Visible_Units_Span(opt)
-% ======= Determination of the range of  X-,Y- and Z-axes ======
-% Determine the range for X-axis (v1 dimension), Y-axis (v2 dimension)
-% Y-axis (v3 dimension) of the boundary values of the centroids. 
+% This function determine the range for X-axis (v1 dimension),
+% Y-axis (v2 dimension) and Y-axis (v3 dimension) of the boundary values
+% of the outermost centroids.
 
 V = opt.V;
 H = opt.H;
