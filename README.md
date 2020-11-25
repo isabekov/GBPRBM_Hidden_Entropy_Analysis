@@ -6,13 +6,16 @@ Training GBPRBM model using Contrastive Divergence alogrithm for three-dimension
 
 Passing one to the function enables loading pretrained weights from LBG-like clustering alogirthm.
 Pretrained weights are stored in "GeometryLBG.mat" file.
->> Synthetic_Data_3D_Train_GBPRBM(1)
+
+    >> Synthetic_Data_3D_Train_GBPRBM(1)
 
 Invoking the function without any arguments enables random initialization of the weights:
->> Synthetic_Data_3D_Train_GBPRBM
 
-To obtain "GeometryLBG.mat" file, run 
->> GBPRBM_LBG_Pretraining
+    >> Synthetic_Data_3D_Train_GBPRBM
+
+To obtain "GeometryLBG.mat" file, run
+
+    >> GBPRBM_LBG_Pretraining
 
 Executing **PaperFig_VPDF_1V_2V_3V.m** will create
 ![VPDF1V2V](PaperFig_VPDF_1V_2V.png "Probability of visible units for V=1, V=2")
